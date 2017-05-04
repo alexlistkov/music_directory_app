@@ -1,19 +1,40 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Music Directory</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/normalize.css' %}" rel="stylesheet">
+        <link href="{% static 'css/main.css' %}" rel="stylesheet">
     </head>
     <body>
-        <h1>Music Directory</h1>
-        {% for music in musics %}
-            <img src="{{ music.cover }}" alt="cover" height="100"/>
-            <p>{{ music.title }}</p>
-            <p>{{ music.album }}</p>
-            <p>{{ music.artist }}</p>
-            <p>{{ music.year }}</p>
-        {% endfor %}
+        <div class="container">
+            <header>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1>Music Directory</h1>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>login, regist, etc</h2>
+                    </div>
+                </div>
+            </header>
+            <article>
+                <div class="row">
+                        <div class="col-md-4">
+                    {% for music in musics %}
+                            <img src="{{ music.cover }}" alt="cover" />
+                            <p>Title: {{ music.title }}</p>
+                            <p>Album: {{ music.album }}</p>
+                            <p>Artist: {{ music.artist }}</p>
+                            <p>Year: {{ music.year }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </article>
+        </div>
     </body>
 </html>
