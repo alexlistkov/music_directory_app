@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Music Directory</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1>Music Directory</h1>
+        {% for music in musics %}
+            <img src="{{ music.cover }}" alt="cover" height="100"/>
+            <p>{{ music.title }}</p>
+            <p>{{ music.album }}</p>
+            <p>{{ music.artist }}</p>
+            <p>{{ music.year }}</p>
+        {% endfor %}
+    </body>
+</html>
