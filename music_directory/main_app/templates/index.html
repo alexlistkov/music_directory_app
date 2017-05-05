@@ -11,7 +11,7 @@
         <link href="{% static 'css/main.css' %}" rel="stylesheet">
     </head>
     <body>
-        <div class="container">
+        <main class="container">
             <header>
                 <div class="row">
                     <div class="col-md-6">
@@ -24,17 +24,21 @@
             </header>
             <article>
                 <div class="row">
-                        <div class="col-md-4">
                     {% for music in musics %}
+                        <div class="col-md-4">
                             <img src="{{ music.cover }}" alt="cover" />
                             <p>Title: {{ music.title }}</p>
                             <p>Album: {{ music.album }}</p>
+                            <p>Genre: {{ music.genre }}</p>
                             <p>Artist: {{ music.artist }}</p>
                             <p>Year: {{ music.year }}</p>
                         </div>
+                    {% if forloop.counter|divisibleby:3 %}
+                        </div><div class="row">
+                    {% endif %}
                     {% endfor %}
                 </div>
             </article>
-        </div>
+        </main>
     </body>
 </html>
