@@ -3,12 +3,14 @@
 
 {% block content %}
     <div class="row">
+        <div class="col-md-12">
+            <h1>{{ username }}</h1>
+        </div>
+    </div>
+    <div class="row">
         {% for music in musics %}
             <div class="col-md-4">
                     <img src="{{ music.cover }}" alt="cover" />
-                <a href="/user/{{ music.user.username }}/">
-                    <p>by: {{ music.user.username }}</p>
-                </a>
                 <a href="/{{ music.id }}/">
                     <p>Title: {{ music.title }}</p>
                 </a>
@@ -21,14 +23,5 @@
             </div><div class="row">
         {% endif %}
         {% endfor %}
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <form action="post_url/" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Submit" />
-            </form>
-        </div>
     </div>
 {% endblock %}
