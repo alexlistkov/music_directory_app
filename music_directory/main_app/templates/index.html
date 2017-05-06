@@ -24,11 +24,13 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <form action="post_url/" method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Submit" />
-            </form>
+            {% if user.is_authenticated %}
+                <form action="post_url/" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Submit" />
+                </form>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
