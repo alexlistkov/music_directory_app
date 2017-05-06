@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{{ music.cover }}" alt="cover" />
+            <p>Title: {{ music.title }}</p>
+            <p>Album: {{ music.album }}</p>
+            <p>Genre: {{ music.genre }}</p>
+            <p>Artist: {{ music.artist }}</p>
+            <p>Year: {{ music.year }}</p>
+        </div>
+    </div>
+{% endblock %}

@@ -1,44 +1,31 @@
+{% extends "base.html" %}
 {% load staticfiles %}
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Music Directory</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-        <link href="{% static 'css/normalize.css' %}" rel="stylesheet">
-        <link href="{% static 'css/main.css' %}" rel="stylesheet">
-    </head>
-    <body>
-        <main class="container">
-            <header>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h1>Music Directory</h1>
-                    </div>
-                    <div class="col-md-6">
-                        <h2>login, regist, etc</h2>
-                    </div>
-                </div>
-            </header>
-            <article>
-                <div class="row">
-                    {% for music in musics %}
-                        <div class="col-md-4">
-                            <img src="{{ music.cover }}" alt="cover" />
-                            <p>Title: {{ music.title }}</p>
-                            <p>Album: {{ music.album }}</p>
-                            <p>Genre: {{ music.genre }}</p>
-                            <p>Artist: {{ music.artist }}</p>
-                            <p>Year: {{ music.year }}</p>
-                        </div>
-                    {% if forloop.counter|divisibleby:3 %}
-                        </div><div class="row">
-                    {% endif %}
-                    {% endfor %}
-                </div>
-            </article>
-        </main>
-    </body>
-</html>
+{% block content %}
+    <div class="row">
+        {% for music in musics %}
+            <div class="col-md-4">
+                <a href="/{{ music.id }}/">
+                    <img src="{{ music.cover }}" alt="cover" />
+                    <p>Title: {{ music.title }}</p>
+                    <p>Album: {{ music.album }}</p>
+                    <p>Genre: {{ music.genre }}</p>
+                    <p>Artist: {{ music.artist }}</p>
+                    <p>Year: {{ music.year }}</p>
+                </a>
+            </div>
+        {% if forloop.counter|divisibleby:3 %}
+            </div><div class="row">
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="post_url/" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+{% endblock %}
