@@ -14,18 +14,9 @@ def index(request):
     return render(request, 'index.html', { 'musics': musics, 'form': form })
 
 def detail(request, music_id):
-    if request.method == 'POST':
-        instance = Music.objects.get(id = music_id)
-        form = MusicAdditionalForm(request.POST, instance = instance)
-        if form.is_valid():
-                music = form.save(commit = False)
-                music.user = request.user
-                music.save()
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    else:   
-        music = Music.objects.get(id = music_id)
-        form = MusicAdditionalForm
-        return render(request, 'details.html', { 'music': music, 'form': form })
+    music = Music.objects.get(id = music_id)
+    form = MusicAdditionalForm
+    return render(request, 'details.html', { 'music': music, 'form': form })
 
 def post_music(request):
     form = MusicForm(request.POST)
@@ -34,6 +25,15 @@ def post_music(request):
         music.user = request.user
         music.save()
     return HttpResponseRedirect('/')
+
+def post_add_music(request, music_id):
+    music_add = Music.objects.get(id = music_id)
+    form = MusicAdditionalForm(request.POST, instance = music_add)
+    if form.is_valid():
+        music = form.save(commit = False)
+        music.user = request.user
+        music.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def profile(request, username):
     user = User.objects.get(username = username)
@@ -52,14 +52,9 @@ def login_view(request):
                     login(request, user)
                     return HttpResponseRedirect('/')
                 else:
-                    form = LoginForm()
-                    return render(request, 'login.html', { 'form': form, 'error': 'The account has been disabled!' })
+                    print("The account has been disabled!")
             else:
-                form = LoginForm()
-                return render(request, 'login.html', { 'form': form, 'error': 'The username and password were incorrect.' })
-        else:
-            form = LoginForm()
-            return render(request, 'login.html', { 'form': form, 'error': 'TRY AGAIN' })
+                print("The username and password were incorrect.")
     else:
         form = LoginForm()
         return render(request, 'login.html', { 'form': form })
@@ -70,10 +65,6 @@ def register(request):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/login/')
-        else:
-            form = UserCreationForm()
-            error = 'TRY AGAIN'
-            return render(request, 'registration.html', { 'form': form, 'error': error })
     else:
         form = UserCreationForm()
         return render(request, 'registration.html', { 'form': form })

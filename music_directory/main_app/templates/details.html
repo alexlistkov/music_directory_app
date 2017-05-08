@@ -11,5 +11,26 @@
             <p>Artist: {{ music.artist }}</p>
             <p>Year: {{ music.year }}</p>
         </div>
+        <div class="col-md-4">
+            <p>{{ music.lyrics|linebreaks }}</p>
+        </div>
+        <div class="col-md-4">
+            {% if music.video is not NULL %}
+                <iframe width="854" height="480" src="{{ music.video }}" frameborder="0" allowfullscreen></iframe>
+            {% else %}
+                <p>Your video is here!</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            {% if user.is_authenticated %}
+                <form action="/{{ music.id }}/" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Submit" />
+                </form>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

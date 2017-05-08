@@ -12,6 +12,8 @@ class Music(models.Model):
     album = models.CharField(max_length = 100)
     year = models.IntegerField(default = 0)
     cover = models.CharField(max_length = 100, default = 'http://icons.iconarchive.com/icons/iconsmind/outline/512/CD-icon.png')
+    lyrics = models.TextField(default = 'Your lyrics here: ')
+    video = models.URLField(null = True)
 
     def __str__(self):
         return self.title
