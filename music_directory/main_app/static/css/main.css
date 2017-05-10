@@ -5,3 +5,8 @@ img {
 #login_field {
     text-align: right;
 }
+
+#delete_warning {
+    color: red;
+    font-weight: bold;
+}

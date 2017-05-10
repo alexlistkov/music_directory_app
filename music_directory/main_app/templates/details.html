@@ -26,10 +26,31 @@
     <div class="row">
         <div class="col-md-6">
             {% if user.is_authenticated %}
+                <h2>Add lyrics & cover:</h2>
                 <form action="/{{ music.id }}/" method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <input type="submit" value="Submit" />
+                </form>
+            {% endif %}
+        </div>
+        <div class="col-md-4">
+            {% if user.is_authenticated %}
+                <h2>Edit:</h2>
+                <form action="/{{ music.id }}/" method="post">
+                    {% csrf_token %}
+                    {{ form_n.as_p }}
+                    <input type="submit" value="Submit" />
+                </form>
+            {% endif %}
+        </div>
+        <div class="col-md-2">
+            {% if user.is_authenticated %}
+                <h2>Delete:</h2>
+                <p id="delete_warning">Don't press if you don't sure!</p>
+                <form action="/{{ music.id }}/del/" method="post">
+                    {% csrf_token %}
+                    <input class="btn btn-danger" type="submit" value="Delete" />
                 </form>
             {% endif %}
         </div>

@@ -17,15 +17,21 @@ def detail(request, music_id):
     if request.method == 'POST':
         instance = Music.objects.get(id = music_id)
         form = MusicAdditionalForm(request.POST, instance = instance)
+        form_n = MusicForm(request.POST, instance = instance)
         if form.is_valid():
                 music = form.save(commit = False)
+                music.user = request.user
+                music.save()
+        elif form_n.is_valid():
+                music = form_n.save(commit = False)
                 music.user = request.user
                 music.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     else:   
         music = Music.objects.get(id = music_id)
         form = MusicAdditionalForm
-        return render(request, 'details.html', { 'music': music, 'form': form })
+        form_n = MusicForm
+        return render(request, 'details.html', { 'music': music, 'form': form, 'form_n': form_n })
 
 def post_music(request):
     form = MusicForm(request.POST)
@@ -33,6 +39,11 @@ def post_music(request):
         music = form.save(commit = False)
         music.user = request.user
         music.save()
+    return HttpResponseRedirect('/')
+
+def del_music(request, music_id):
+    instance = Music.objects.get(id = music_id)
+    instance.delete()
     return HttpResponseRedirect('/')
 
 def profile(request, username):
