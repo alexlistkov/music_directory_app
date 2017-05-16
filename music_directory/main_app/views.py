@@ -92,3 +92,27 @@ def register(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+#def add_to_fav(request):
+    #if request.method == "POST":
+        #music_id = request.POST.get('music_id', None)
+        #if (music_id):
+            #music = Music.objects.get(id = int(music_id))
+            #if music is not None:
+                #if music.favorites == False:
+                    #music.favorites = True
+                    #music.save()
+                #else:
+                    #music.favorites = False
+                    #music.save()
+    #return HttpResponseRedirect('/')
+
+def add_to_fav(request, music_id):
+    music = Music.objects.get(id = music_id)
+    if music.favorites == False:
+        music.favorites = True
+        music.save()
+    else:
+        music.favorites = False
+        music.save()
+    return HttpResponseRedirect('/')

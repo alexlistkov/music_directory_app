@@ -16,6 +16,17 @@
                     <p>Genre: {{ music.genre }}</p>
                     <p>Artist: {{ music.artist }}</p>
                     <p>Year: {{ music.year }}</p>
+                    {% if music.favorites == False %}
+                        <form action="add_to_fav/{{ music.id }}/" method="post">
+                        {% csrf_token %}
+                        <button id="star_empty" class="glyphicon glyphicon-star-empty" type="submit" />
+                        </form>
+                    {% else %}
+                        <form action="add_to_fav/{{ music.id }}/" method="post">
+                        {% csrf_token %}
+                        <button id="star" class="glyphicon glyphicon-star" type="submit" />
+                        </form>
+                    {% endif %}
             </div>
         {% if forloop.counter|divisibleby:3 %}
             </div><div class="row">

@@ -14,6 +14,7 @@ class Music(models.Model):
     cover = models.CharField(max_length = 100, default = 'http://icons.iconarchive.com/icons/iconsmind/outline/512/CD-icon.png')
     lyrics = models.TextField(default = 'Your lyrics here: ')
     video = models.URLField(null = True)
+    favorites = models.BooleanField(default = False)
 
     def __str__(self):
         return self.title

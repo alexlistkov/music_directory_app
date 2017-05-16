@@ -10,3 +10,12 @@ img {
     color: red;
     font-weight: bold;
 }
+
+.col-md-4 {
+    margin-bottom: 15px;
+}
+
+#star_empty,
+#star {
+    color: gold;
+}
