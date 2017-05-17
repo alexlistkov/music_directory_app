@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^register/$', views.register, name = 'register'),
     url(r'^([0-9]+)/del/$', views.del_music, name = 'del_music'),
     url(r'^add_to_fav/([0-9]+)/$', views.add_to_fav, name = 'add_to_fav'),
+    url(r'^favorites/$', views.favorites, name = 'favorites'),
+
 ]

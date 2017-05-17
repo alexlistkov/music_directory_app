@@ -116,3 +116,7 @@ def add_to_fav(request, music_id):
         music.favorites = False
         music.save()
     return HttpResponseRedirect('/')
+
+def favorites(request):
+    musics = Music.objects.filter(favorites = True)
+    return render(request, 'favorites.html', {'musics': musics})
