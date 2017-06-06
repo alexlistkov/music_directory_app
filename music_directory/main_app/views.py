@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -107,16 +107,83 @@ def logout_view(request):
                     #music.save()
     #return HttpResponseRedirect('/')
 
-def add_to_fav(request, music_id):
-    music = Music.objects.get(id = music_id)
-    if music.favorites == False:
-        music.favorites = True
-        music.save()
-    else:
-        music.favorites = False
-        music.save()
-    return HttpResponseRedirect('/')
+def add_to_fav(request):
+    music_id = request.POST.get('music_id', None)
+
+    favorites = False
+    if (music_id):
+        music = Music.objects.get(id = int(music_id))
+        if music is not None:
+            if music.favorites == favorites:
+                favorites = True
+                music.favorites = favorites
+                music.save()
+            else:
+                music.favorites = favorites
+                music.save()
+    return HttpResponse(favorites)
 
 def favorites(request):
     musics = Music.objects.filter(favorites = True)
     return render(request, 'favorites.html', {'musics': musics})
+
+def order_by_year(request):
+    order = request.GET.get('order', 'desc')
+    all_music = Music.objects.all()
+    if(order == 'desc'):
+        musics = all_music.order_by('-year')
+    elif(order == 'asc'):
+        musics = all_music.order_by('year')
+    return render(request, 'favorites.html', {'musics': musics, 'order': order})
+
+def order_by_artist(request):
+    order = request.GET.get('order', 'desc')
+    all_music = Music.objects.all()
+    if(order == 'desc'):
+        musics = all_music.order_by('-artist')
+    elif(order == 'asc'):
+        musics = all_music.order_by('artist')
+    return render(request, 'favorites.html', {'musics': musics, 'order': order})
+
+def order_by_genre(request):
+    order = request.GET.get('order', 'desc')
+    all_music = Music.objects.all()
+    if(order == 'desc'):
+        musics = all_music.order_by('-genre')
+    elif(order == 'asc'):
+        musics = all_music.order_by('genre')
+    return render(request, 'favorites.html', {'musics': musics, 'order': order})
+
+def order_by_album(request):
+    order = request.GET.get('order', 'desc')
+    all_music = Music.objects.all()
+    if(order == 'desc'):
+        musics = all_music.order_by('-album')
+    elif(order == 'asc'):
+        musics = all_music.order_by('album')
+    return render(request, 'favorites.html', {'musics': musics, 'order': order})
+
+def order_by_title(request):
+    order = request.GET.get('order', 'desc')
+    all_music = Music.objects.all()
+    if(order == 'desc'):
+        musics = all_music.order_by('-title')
+    elif(order == 'asc'):
+        musics = all_music.order_by('title')
+    return render(request, 'favorites.html', {'musics': musics, 'order': order})
+
+def filter_year(request, year):
+    musics = Music.objects.filter(year = year)
+    return render(request, 'filter.html', {'musics': musics})
+    
+def filter_artist(request, artist):
+    musics = Music.objects.filter(artist = artist)
+    return render(request, 'filter.html', {'musics': musics})
+
+def filter_genre(request, genre):
+    musics = Music.objects.filter(genre = genre)
+    return render(request, 'filter.html', {'musics': musics})
+
+def filter_album(request, album):
+    musics = Music.objects.filter(album = album)
+    return render(request, 'filter.html', {'musics': musics})

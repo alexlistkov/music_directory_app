@@ -6,17 +6,17 @@
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <h4>Sort by: </h4>
-                <li><a href="#">Title</a></li>
-                <li><a href="#">Album</a></li>
-                <li><a href="#">Genre</a></li>
-                <li><a href="#">Artist</a></li>
-                <li><a href="#">Year</a></li>
+                <li><a href="{% url 'order_by_title' %}?order={% if order == 'desc' %}asc{% else %}desc{% endif %}">Title</a></li>
+                <li><a href="{% url 'order_by_album' %}?order={% if order == 'desc' %}asc{% else %}desc{% endif %}">Album</a></li>
+                <li><a href="{% url 'order_by_genre' %}?order={% if order == 'desc' %}asc{% else %}desc{% endif %}">Genre</a></li>
+                <li><a href="{% url 'order_by_artist' %}?order={% if order == 'desc' %}asc{% else %}desc{% endif %}">Artist</a></li>
+                <li><a href="{% url 'order_by_year' %}?order={% if order == 'desc' %}asc{% else %}desc{% endif %}">Year</a></li>
             </ol>
         </div>
         <div class="col-md-6">
             <ol class="breadcrumb">
                 <h4>Filter by: </h4>
-                <li><a href="favorites/">Favorites</a></li>
+                <li><a href="{% url 'favorites' %}">Favorites</a></li>
             </ol>
         </div>
     </div>
@@ -30,20 +30,14 @@
                 <a href="/{{ music.id }}/">
                     <p>Title: {{ music.title }}</p>
                 </a>
-                    <p>Album: {{ music.album }}</p>
-                    <p>Genre: {{ music.genre }}</p>
-                    <p>Artist: {{ music.artist }}</p>
-                    <p>Year: {{ music.year }}</p>
+                    <p>Album: <a href="/album/{{ music.album }}/">{{ music.album }}</p></a>
+                    <p>Genre: <a href="/genre/{{ music.genre }}/">{{ music.genre }}</p></a>
+                    <p>Artist: <a href="/artist/{{ music.artist }}/">{{ music.artist }}</p></a>
+                    <p>Year: <a href="/year/{{ music.year }}/">{{ music.year }}</p></a>
                     {% if music.favorites == False %}
-                        <form action="add_to_fav/{{ music.id }}/" method="post">
-                        {% csrf_token %}
-                        <button id="star_empty" class="glyphicon glyphicon-star-empty" type="submit" />
-                        </form>
+                        <button id="star" data-id="{{ music.id }}" class="glyphicon glyphicon-star-empty" type="button" />
                     {% else %}
-                        <form action="add_to_fav/{{ music.id }}/" method="post">
-                        {% csrf_token %}
-                        <button id="star" class="glyphicon glyphicon-star" type="submit" />
-                        </form>
+                        <button id="star" data-id="{{ music.id }}" class="glyphicon glyphicon-star" type="button" />
                     {% endif %}
             </div>
         {% if forloop.counter|divisibleby:3 %}
@@ -54,9 +48,11 @@
     <div class="row">
         <div class="col-md-6">
             {% if user.is_authenticated %}
-                <form action="post_url/" method="post">
+                <form action="post_url/" method="post" class="music-form" >
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    <div class="form-group">
+                        {{ form.as_p }}
+                    </div>
                     <input type="submit" value="Submit" />
                 </form>
             {% endif %}
