@@ -142,3 +142,5 @@ LOGIN_EXEMPT_URLS = (
     r'^logout/$',
     r'^register/$'
 )
+
+LOGIN_REDIRECT_URL = '/'
