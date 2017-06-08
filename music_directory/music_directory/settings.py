@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'music_directory.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'music_directory.urls'
@@ -134,3 +135,10 @@ STATICFILES_DIRS = (
 # https://warehouse.python.org/project/whitenoise/
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+LOGIN_URL = '/login/'
+
+LOGIN_EXEMPT_URLS = (
+    r'^logout/$',
+    r'^register/$'
+)
