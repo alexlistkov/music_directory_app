@@ -48,9 +48,9 @@
             {% if user.is_authenticated %}
                 <h2>Delete:</h2>
                 <p id="delete_warning">Don't press if you don't sure!</p>
-                <form action="/{{ music.id }}/del/" method="post">
+                <form action="/{{ music.id }}/del/"  method="post">
                     {% csrf_token %}
-                    <input class="btn btn-danger" type="submit" value="Delete" />
+                    <input class="btn btn-danger" onclick="return confirm('Are you sure?')" type="submit" value="Delete" />
                 </form>
             {% endif %}
         </div>
