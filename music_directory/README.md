@@ -11,5 +11,5 @@ This is a simple app that allows you to create your own library with your favori
 To get this app follow the link:
 https://music-directory.herokuapp.com
 
-### Author: Alex Listkov
+### Author: Alex Listkov, http://alex.listkov.me
 
