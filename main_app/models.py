@@ -5,7 +5,7 @@ from django.db import models
 
 # Create your models here.
 class Music(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length = 100)
     artist = models.CharField(max_length = 100)
     genre = models.CharField(max_length = 100)
